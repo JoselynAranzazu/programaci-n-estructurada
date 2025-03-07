@@ -1,0 +1,21 @@
+#include<stdio.h>
+
+/*int sumas(int a = 10, int b = 20)
+{
+ return a+b;
+}
+int main()
+{   int a = 10, b = 20, Resultado = 0;
+    sumas(a, b, Resultado);
+    printf(" a:%d\n \tb:%d\n", a, b);
+    */
+int main ()
+{
+    int x= 10;
+    int y= 20;
+    int resultado= 0;
+    int suma(x, y, resuldato);
+    printf("%d", resultado);
+return 0;
+}
+
