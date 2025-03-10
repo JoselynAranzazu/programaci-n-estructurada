@@ -65,7 +65,7 @@ int main()
  printf("\n1. CUENTA 1\n");
  printf("\n2. CUENTA 2\n");
  printf("\n3. CUENTA 3\n");
- printf("\nIngrese la cuenta con la que desea trabajar\n");
+ printf("\nIngrese la cuenta con la que desea trabajar:\n");
  scanf("%d", &cuentas);
  switch(cuentas)
  {
