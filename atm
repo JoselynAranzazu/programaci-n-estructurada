@@ -1,21 +1,4 @@
 #include<stdio.h>
-//Función que verifica que el pin ingresado sea correcto.
-int correcto(int cuenta1)
-{
-    // Si el pin es correcto, se muestra un mensaje y se retorna 1.
-    if(s == 1234 || s == 5678 || s == 9746)
-    {
-        printf("\nEl pin es correcto.\n");
-        return 1;
-    }
-    //Si el pin es incorrecto, se muestra un mensaje y se retorna 0;
-    else
-    {
-         printf("\nEl pin es incorrecto.\n");
-         return 0;
-    }
-    return 0;
-}
 
 //Función que valida que la cantidad sea positiva.
 int valida(float x)
@@ -67,35 +50,33 @@ int Aceptable(float y, float saldo)
 
 int main()
 {
- float cash[3] = {{1000}, {2000}, {10000}};
-
- int cuentas, ope, j;
- int i, pin[3]= {{1234}, {5678}, {9746}};
- for(int i = 0; i < 3; i++)
- {
-    printf("Su pin es correcto para la cuenta\n", cuentas);
- }
+ float cash[3] = {1000, 2000, 10000};
+ int cuentas, i;
+ int  pin[3]= {1234, 5678, 8910}, pin_ingresado;
  int intentos = 0;
  int op, cont;
  float cantidad;
 
- int c, v, A;
+ int  v, A;
 
  //Saluda al usuario y se le da la bienvenida.
  printf("===Bienvenido al cajero automatico *BBVA*===\n");
 
- printf("\nIngrese la cuenta con la que desea trabajar\n");
  printf("\n1. CUENTA 1\n");
  printf("\n2. CUENTA 2\n");
  printf("\n3. CUENTA 3\n");
+ printf("\nIngrese la cuenta con la que desea trabajar\n");
  scanf("%d", &cuentas);
- switch(ope)
+ switch(cuentas)
  {
      case 1: printf("\n CUENTA 1\n");
+             i = 0;
              break;
      case 2: printf("\n CUENTA 2\n");
+             i = 1;
              break;
      case 3: printf("\n CUENTA 3\n");
+             i = 2;
              break;
     default:
             printf("Ingrese una opcion que este dentro de las opciones\n");
@@ -107,9 +88,8 @@ int main()
  {
      //Solicita al usuario que ingrese el pin.
      printf("\nIngrese su pin de cuatro digitos:\n");
-     scanf("%d", &pin[i]);
-     c = correcto(pin[i]);// Llama a la función para verificar el pin.
-     if(c == 1)
+     scanf("%d", &pin_ingresado);
+     if(pin_ingresado == pin[cuentas-1])
      {
          //Si el pin es correcto, se permite el acceso.
          printf("\nAcceso permitido.\n");
@@ -118,10 +98,11 @@ int main()
      else
      {
          //Si el pin es incorrecto, se muestra el numero de intentos.
-         printf("Numero de intento %d de 3.\n", intentos+1);
+         printf("\nEl pin es incorrecto, ingrese el pin nuevamente.\n");
+         printf("\nNumero de intento %d de 3.\n", intentos+1);
      }
  }
- if (c != 1) // Esto es por si después de 3 intentos sigue siendo incorrecto el pin; se bloquea el acceso.
+ if (intentos == 3) // Esto es por si después de 3 intentos sigue siendo incorrecto el pin; se bloquea el acceso.
  {
      printf("\nAcceso denegado. Se bloqueara la cuenta. Para solucionar el problema, contacte a su banco.\n");
      return 0;
@@ -144,7 +125,7 @@ int main()
      switch(op)
      {
      case 1: printf("=== Consultar saldo ===\n");
-             printf("Su saldo es:%2.f\n",cash);//Muestra el saldo actual.
+             printf("Su saldo es:%.2f\n",cash[i]);//Muestra el saldo actual.
              break;
      case 2: printf("=== Depositar dinero ===\n");
 
@@ -159,15 +140,15 @@ int main()
                  scanf("%f", &cantidad);
                  v = valida(cantidad);
              }
-             cash[j] = cantidad + cash[j]; //Actualiza el saldo después del deposito.
-             printf("\nSu nuevo saldo es: %.2f\n", cash[j]);
+             cash[i] = cantidad + cash[i]; //Actualiza el saldo después del deposito.
+             printf("\nSu nuevo saldo es: %.2f\n", cash[i]);
              break;
      case 3: printf("=== Retirar dinero ===\n");
              printf("Ingrese la cantidad que desea retirar:\n");
              scanf("%f", &cantidad);
 
              v = valida(cantidad);
-             A= Aceptable(cantidad, cash[j]);
+             A= Aceptable(cantidad, cash[i]);
 
              //Verifica que la cantidad que se desea retirar sea válida y aceptable.
              while(v != 1 || A != 1)
@@ -175,11 +156,11 @@ int main()
                 printf("\nIngrese una cantidad aceptable:\n");
                 scanf("%f", &cantidad);
                 v = valida(cantidad);
-                A = Aceptable(cantidad, cash[j]);
+                A = Aceptable(cantidad, cash[i]);
             }
 
-             cash[j] = cash[j] - cantidad;
-             printf("\nSu saldo actual es: %.2f\n", cash);//Actualiza el saldo después del retiro.
+             cash[i] = cash[i] - cantidad;
+             printf("\nSu saldo actual es: %.2f\n", cash[i]);//Actualiza el saldo después del retiro.
              break;
      case 4: printf("=== Salir ===\n");
              printf("\nGracias por preferir el cajero *BBVA*. Hasta luego, que tengas un buen dia.\n");
