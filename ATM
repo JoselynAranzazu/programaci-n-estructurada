@@ -1,10 +1,10 @@
 #include<stdio.h>
 #include "ATM.h"
 
-//Función que valida que la cantidad sea positiva.
+//FunciÃ³n que valida que la cantidad sea positiva.
 int valida(float x)
 {
-    // Si la cantidad es positiva, es válida.
+    // Si la cantidad es positiva, es vÃ¡lida.
     if(x>0)
     {
         printf("\nLa cantidad ingresada es valida.\n");
@@ -16,7 +16,7 @@ int valida(float x)
         printf("\nLa cantidad ingresada es 0.\n \nNo me hagas perder el tiempo.\n");
         return 0;
     }
-    //Si la cantida es negativa, se le pide al usuario que ingres un número positivo.
+    //Si la cantida es negativa, se le pide al usuario que ingres un nÃºmero positivo.
     else
     {
         printf("\nLa cantidad ingresada es NEGATIVA.\n \nIngrese un numero positivo, por favor.\n");
@@ -25,7 +25,7 @@ int valida(float x)
     return 0;
 }
 
-//Función que valida que cuenta con el dinero que se desea retirar.
+//FunciÃ³n que valida que cuenta con el dinero que se desea retirar.
 int Aceptable(float y, float saldo)
 {
     if(y > 0 && y <= saldo )
@@ -84,7 +84,7 @@ int main()
             break;
 }
 
- //Verificación del pin que permite solo 3 intentos.
+ //VerificaciÃ³n del pin que permite solo 3 intentos.
  for(intentos = 0; intentos < 3; intentos++) //Se utiliza para la cantidad de intentos del pin.
  {
      //Solicita al usuario que ingrese el pin.
@@ -103,17 +103,17 @@ int main()
          printf("\nNumero de intento %d de 3.\n", intentos+1);
      }
  }
- if (intentos == 3) // Esto es por si después de 3 intentos sigue siendo incorrecto el pin; se bloquea el acceso.
+ if (intentos == 3) // Esto es por si despuÃ©s de 3 intentos sigue siendo incorrecto el pin; se bloquea el acceso.
  {
      printf("\nAcceso denegado. Se bloqueara la cuenta. Para solucionar el problema, contacte a su banco.\n");
      return 0;
  }//Sale y termina el programa al bloquearse la cuenta.
 
- // Si el pin es correcto, se muestra el menú de operaciones.
+ // Si el pin es correcto, se muestra el menÃº de operaciones.
  do{
 
 
-     printf("\n===Menu de opciones===\n");//Menú del cajero.
+     printf("\n===Menu de opciones===\n");//MenÃº del cajero.
      printf("\n=== Cajero automatico *BBVA* ===\n\n");
      printf("1. Consultar saldo\n");
      printf("2. Depositar dinero\n");
@@ -122,7 +122,7 @@ int main()
      printf("\nSeleccione una opcion, por favor:\n");
      scanf("%d", &op);
 
-    //Control del menú de opciones.
+    //Control del menÃº de opciones.
      switch(op)
      {
      case 1: printf("=== Consultar saldo ===\n");
@@ -141,7 +141,7 @@ int main()
                  scanf("%f", &cantidad);
                  v = valida(cantidad);
              }
-             cash[i] = cantidad + cash[i]; //Actualiza el saldo después del deposito.
+             cash[i] = cantidad + cash[i]; //Actualiza el saldo despuÃ©s del deposito.
              printf("\nSu nuevo saldo es: %.2f\n", cash[i]);
              break;
      case 3: printf("=== Retirar dinero ===\n");
@@ -151,7 +151,7 @@ int main()
              v = valida(cantidad);
              A= Aceptable(cantidad, cash[i]);
 
-             //Verifica que la cantidad que se desea retirar sea válida y aceptable.
+             //Verifica que la cantidad que se desea retirar sea vÃ¡lida y aceptable.
              while(v != 1 || A != 1)
             {
                 printf("\nIngrese una cantidad aceptable:\n");
@@ -161,7 +161,7 @@ int main()
             }
 
              cash[i] = cash[i] - cantidad;
-             printf("\nSu saldo actual es: %.2f\n", cash[i]);//Actualiza el saldo después del retiro.
+             printf("\nSu saldo actual es: %.2f\n", cash[i]);//Actualiza el saldo despuÃ©s del retiro.
              break;
      case 4: printf("=== Salir ===\n");
              printf("\nGracias por preferir el cajero *BBVA*. Hasta luego, que tengas un buen dia.\n");
@@ -170,12 +170,12 @@ int main()
     default:
              printf("=== Ingrese una opcion que este dentro de las opciones ===\n");
              break;
-             //Esto es por si elige alguna de opción que no este dentro del menú.
+             //Esto es por si elige alguna de opciÃ³n que no este dentro del menÃº.
      }
      printf("\nDesea realizar otra operacion? 1. Si y 2. No:\n");
      scanf("%d", &cont);
 
-    }while(cont== 1);// Con esto se evalúa si el usuario quiere realizar otra operación y se repite el ciclo si este elige sí.
+    }while(cont== 1);// Con esto se evalÃºa si el usuario quiere realizar otra operaciÃ³n y se repite el ciclo si este elige sÃ­.
     printf("\nGracias por preferir el cajero *BBVA*. Hasta luego, que tengas un buen dia.\n");
 
 return 0;
