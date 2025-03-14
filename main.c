@@ -1,0 +1,182 @@
+#include<stdio.h>
+#include "ATM.h"
+
+//Función que valida que la cantidad sea positiva.
+int valida(float x)
+{
+    // Si la cantidad es positiva, es válida.
+    if(x>0)
+    {
+        printf("\nLa cantidad ingresada es valida.\n");
+        return 1;
+    }
+    //Si la cantidad es 0, se muestra el siguiente mensaje.
+    else if (x == 0)
+    {
+        printf("\nLa cantidad ingresada es 0.\n \nNo me hagas perder el tiempo.\n");
+        return 0;
+    }
+    //Si la cantida es negativa, se le pide al usuario que ingres un número positivo.
+    else
+    {
+        printf("\nLa cantidad ingresada es NEGATIVA.\n \nIngrese un numero positivo, por favor.\n");
+        return 101;
+    }
+    return 0;
+}
+
+//Función que valida que cuenta con el dinero que se desea retirar.
+int Aceptable(float y, float saldo)
+{
+    if(y > 0 && y <= saldo )
+    {
+        //Si el usuario cuenta con la cantidad que desea retirar, te muestra este mensaje.
+        printf("El retiro se puede realizar.\n");
+        return 1;
+    }
+    else if(y> saldo)
+    {
+        //Si no se cuenta con esa cantidad, te muestra el siguiente mensaje y te solicita otra cantidad con la que cuentes.
+        printf("\nNo cuentas con esta cantidad, no seas transa.\n \nIngresa una cantidad con la que cuentes, por favor.\n");
+        return 0;
+    }
+    else
+    {
+        //Si la cantidad es negativa se muestra esto.
+        printf("\nNo puedes retirar cantidades negativas.\n");
+        return 101;
+    }
+    return 0;
+}
+
+int main()
+{
+ float cash[3] = {1000, 2000, 10000};
+ int cuentas, i;
+ int  pin[3]= {1234, 5678, 8910}, pin_ingresado;
+ int intentos = 0;
+ int op, cont;
+ float cantidad;
+
+ int  v, A;
+
+ //Saluda al usuario y se le da la bienvenida.
+ printf("===Bienvenido al cajero automatico *BBVA*===\n");
+
+ printf("\n1. CUENTA 1\n");
+ printf("\n2. CUENTA 2\n");
+ printf("\n3. CUENTA 3\n");
+ printf("\nIngrese la cuenta con la que desea trabajar:\n");
+ scanf("%d", &cuentas);
+ switch(cuentas)
+ {
+     case 1: printf("\n CUENTA 1\n");
+             i = 0;
+             break;
+     case 2: printf("\n CUENTA 2\n");
+             i = 1;
+             break;
+     case 3: printf("\n CUENTA 3\n");
+             i = 2;
+             break;
+    default:
+            printf("Ingrese una opcion que este dentro de las opciones\n");
+            break;
+}
+
+ //Verificación del pin que permite solo 3 intentos.
+ for(intentos = 0; intentos < 3; intentos++) //Se utiliza para la cantidad de intentos del pin.
+ {
+     //Solicita al usuario que ingrese el pin.
+     printf("\nIngrese su pin de cuatro digitos:\n");
+     scanf("%d", &pin_ingresado);
+     if(pin_ingresado == pin[cuentas-1])
+     {
+         //Si el pin es correcto, se permite el acceso.
+         printf("\nAcceso permitido.\n");
+         break; //Se corta o se cierra el bucle al ser correcto el pin.
+     }
+     else
+     {
+         //Si el pin es incorrecto, se muestra el numero de intentos.
+         printf("\nEl pin es incorrecto, ingrese el pin nuevamente.\n");
+         printf("\nNumero de intento %d de 3.\n", intentos+1);
+     }
+ }
+ if (intentos == 3) // Esto es por si después de 3 intentos sigue siendo incorrecto el pin; se bloquea el acceso.
+ {
+     printf("\nAcceso denegado. Se bloqueara la cuenta. Para solucionar el problema, contacte a su banco.\n");
+     return 0;
+ }//Sale y termina el programa al bloquearse la cuenta.
+
+ // Si el pin es correcto, se muestra el menú de operaciones.
+ do{
+
+
+     printf("\n===Menu de opciones===\n");//Menú del cajero.
+     printf("\n=== Cajero automatico *BBVA* ===\n\n");
+     printf("1. Consultar saldo\n");
+     printf("2. Depositar dinero\n");
+     printf("3. Retirar dinero\n");
+     printf("4. Salir\n");
+     printf("\nSeleccione una opcion, por favor:\n");
+     scanf("%d", &op);
+
+    //Control del menú de opciones.
+     switch(op)
+     {
+     case 1: printf("=== Consultar saldo ===\n");
+             printf("Su saldo es:%.2f\n",cash[i]);//Muestra el saldo actual.
+             break;
+     case 2: printf("=== Depositar dinero ===\n");
+
+             printf("Ingrese la cantidad del deposito:\n");
+             scanf("%f", &cantidad);
+             v = valida(cantidad);
+
+             //Verifica que la cantidad ingresada sea valida.
+             while(v != 1)
+             {
+                 printf("\nIngrese una cantidad valida:\n");
+                 scanf("%f", &cantidad);
+                 v = valida(cantidad);
+             }
+             cash[i] = cantidad + cash[i]; //Actualiza el saldo después del deposito.
+             printf("\nSu nuevo saldo es: %.2f\n", cash[i]);
+             break;
+     case 3: printf("=== Retirar dinero ===\n");
+             printf("Ingrese la cantidad que desea retirar:\n");
+             scanf("%f", &cantidad);
+
+             v = valida(cantidad);
+             A= Aceptable(cantidad, cash[i]);
+
+             //Verifica que la cantidad que se desea retirar sea válida y aceptable.
+             while(v != 1 || A != 1)
+            {
+                printf("\nIngrese una cantidad aceptable:\n");
+                scanf("%f", &cantidad);
+                v = valida(cantidad);
+                A = Aceptable(cantidad, cash[i]);
+            }
+
+             cash[i] = cash[i] - cantidad;
+             printf("\nSu saldo actual es: %.2f\n", cash[i]);//Actualiza el saldo después del retiro.
+             break;
+     case 4: printf("=== Salir ===\n");
+             printf("\nGracias por preferir el cajero *BBVA*. Hasta luego, que tengas un buen dia.\n");
+             return 0;//Salida del programa.
+
+    default:
+             printf("=== Ingrese una opcion que este dentro de las opciones ===\n");
+             break;
+             //Esto es por si elige alguna de opción que no este dentro del menú.
+     }
+     printf("\nDesea realizar otra operacion? 1. Si y 2. No:\n");
+     scanf("%d", &cont);
+
+    }while(cont== 1);// Con esto se evalúa si el usuario quiere realizar otra operación y se repite el ciclo si este elige sí.
+    printf("\nGracias por preferir el cajero *BBVA*. Hasta luego, que tengas un buen dia.\n");
+
+return 0;
+}
